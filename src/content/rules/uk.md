@@ -4,7 +4,7 @@ author: "Админ Фіолетовій"
 published_at: "2026-04-17"
 last_modified: "2026-05-10"
 source: "https://telegra.ph/Konstituciya-servera-shchos-04-17"
-cover_image: "../../assets/logo.gif"
+cover_image: "/logo.gif"
 cover_caption: "Флаг/Ємблема Сервера"
 tags: ["constitution", "server", "rules"]
 ---
@@ -13,7 +13,7 @@ tags: ["constitution", "server", "rules"]
 
 > **Админ Фіолетовій** · *2026-05-10*
 
-![Флаг/Ємблема Сервера](/shchos/logo.gif)
+![Флаг/Ємблема Сервера](/logo.gif)
 
 ---
 
@@ -54,7 +54,7 @@ tags: ["constitution", "server", "rules"]
 
 ## раздел чай
 
-![Чай](/shchos/tea.png)
+![Чай](/tea.png)
 
 1. Не піть чай (бан)
 2. Єто чай

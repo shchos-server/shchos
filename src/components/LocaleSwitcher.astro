@@ -8,7 +8,7 @@ const currentLocale = Astro.currentLocale;
 
 const targetLocale = currentLocale === 'uk' ? 'en' : 'uk';
 
-const base = "/shchos";
+const base = "";
 let cleanPathname = pathname.replace(base, ""); 
 
 if (currentLocale && cleanPathname.startsWith(`/${currentLocale}`)) {
