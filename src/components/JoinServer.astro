@@ -1,0 +1,19 @@
+---
+const { fontSize = '16px' } = Astro.props;
+
+const label =
+  Astro.currentLocale === "uk" ? "Приєднатися до сервера" : "Join server";
+---
+
+<a href=""><button type="button">{label}</button></a>
+
+<style define:vars={{ fontSize }}>
+  button {
+    padding: 0.9em 2em;
+    border: none;
+    font-size: var(--fontSize);
+    border-radius: 1.5em;
+    background-color: #5865f2;
+    color: #fff;
+  }
+</style>

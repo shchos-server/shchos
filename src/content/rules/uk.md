@@ -1,19 +1,19 @@
 ---
 title: "Конституция сервера щось"
-author: "Админ Фіолетовий"
+author: "Админ Фіолетовій"
 published_at: "2026-04-17"
 last_modified: "2026-05-10"
 source: "https://telegra.ph/Konstituciya-servera-shchos-04-17"
-cover_image: "https://www.dropbox.com/scl/fi/v491beyj7vd0s5ulwdijl/0001-0250-ezgif.com-crop-1.gif?rlkey=o5u9qu0432qh5bgm7eibmpfar&st=ogq2melp&dl=1"
+cover_image: "../../assets/logo.gif"
 cover_caption: "Флаг/Ємблема Сервера"
 tags: ["constitution", "server", "rules"]
 ---
 
 # Конституция сервера щось
 
-> Автор: **Админ Фіолетовий** · *17 апреля 2026*
+> **Админ Фіолетовій** · *2026-05-10*
 
-![Флаг/Ємблема Сервера](https://www.dropbox.com/scl/fi/v491beyj7vd0s5ulwdijl/0001-0250-ezgif.com-crop-1.gif?rlkey=o5u9qu0432qh5bgm7eibmpfar&st=ogq2melp&dl=1)
+![Флаг/Ємблема Сервера](/shchos/logo.gif)
 
 ---
 
@@ -54,7 +54,7 @@ tags: ["constitution", "server", "rules"]
 
 ## раздел чай
 
-![Чай](https://www.dropbox.com/scl/fi/vfe5f5jpr4hzl8glqqn7b/.png?rlkey=wku5jeii0xnrxedb7xztigp9d&st=078t06tv&dl=1)
+![Чай](/shchos/tea.png)
 
 1. Не піть чай (бан)
 2. Єто чай

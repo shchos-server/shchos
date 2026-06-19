@@ -1,0 +1,30 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+import "/node_modules/flag-icons/css/flag-icons.min.css";
+
+const { pathname } = Astro.url;
+const currentLocale = Astro.currentLocale;
+
+const targetLocale = currentLocale === 'uk' ? 'en' : 'uk';
+
+const base = "/shchos";
+let cleanPathname = pathname.replace(base, ""); 
+
+if (currentLocale && cleanPathname.startsWith(`/${currentLocale}`)) {
+  cleanPathname = cleanPathname.substring(currentLocale.length + 1);
+}
+
+const targetURL = getRelativeLocaleUrl(targetLocale, cleanPathname);
+
+const label = currentLocale === 'uk' ? 'ua' : 'gb';
+---
+
+<a href={targetURL}><span class=`fi fi-${label}`></span></a>
+
+<style>
+  a span {
+    width: 45px;
+    height: 25px;
+  }
+</style>
