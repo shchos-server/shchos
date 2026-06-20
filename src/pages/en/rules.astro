@@ -1,8 +1,26 @@
 ---
-import Layout from '../../layouts/LayoutEN.astro';
+import Layout from "../../layouts/LayoutEN.astro";
+import { getEntry, render } from "astro:content";
+
+const locale = Astro.currentLocale ?? 'en'
+const rules = await getEntry('rules', locale)
+
+if (!rules) throw new Error(`No rules entry found for locale: ${locale}`);
+
+const { Content } = await render(rules);
+
+const pageTitle = rules.data.title
 ---
 
-<Layout>
-	<h2>Work in progress...</h2>
-	<a href="/en">Return to main page</a>
+<Layout title={pageTitle}>
+  <article class="content">
+    <Content />
+  </article>
 </Layout>
+
+<style>
+	.content {
+		max-width: 726px;
+		margin: 0 auto;
+	}
+</style>

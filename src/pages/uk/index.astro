@@ -1,8 +1,31 @@
 ---
-import Welcome from '../../components/Welcome.astro';
 import Layout from '../../layouts/LayoutUK.astro';
+import JoinServer from '../../components/JoinServer.astro';
 ---
 
 <Layout>
-	<Welcome />
+	<div class="content">
+        <h2>Вітаємо на <span class="title">щось</span></h2>
+        <JoinServer fontSize="28px"/>
+
+    </div>
 </Layout>
+
+<style>
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 1080px;
+        padding: 50px 0;
+        margin: 0 auto;
+    }
+
+    h2 {
+        font-size: 36px;
+    }
+
+    .title {
+        color: #5865f2;
+    }
+</style>

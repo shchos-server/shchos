@@ -23,7 +23,9 @@ const title = Astro.props.title ?? "Щось";
   </head>
   <body>
     <header>
-      <h2>щось</h2>
+      <a href="/uk">
+        <h2>щось</h2>
+      </a>
       <nav>
         <ul>
           <li><a href="/uk/rules">Rules</a></li>
@@ -31,9 +33,9 @@ const title = Astro.props.title ?? "Щось";
         </ul>
       </nav>
       <div class="join">
-		<LocaleSwitcher />
-      	<JoinServer />
-	  </div>
+        <LocaleSwitcher />
+        <JoinServer />
+      </div>
     </header>
     <main>
       <slot />
@@ -70,7 +72,7 @@ const title = Astro.props.title ?? "Щось";
   }
 
   a {
-	text-decoration: none;
+    text-decoration: none;
   }
 
   ul {
