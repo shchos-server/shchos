@@ -1,8 +1,110 @@
 ---
-import Layout from '../../layouts/LayoutEN.astro';
+import Layout from "../../layouts/LayoutEN.astro";
+import Countdown from "../../components/Countdown.astro";
+import Copy from "../../assets/copy.svg";
 ---
 
 <Layout>
-	<h2>Work in progress...</h2>
-	<a href="/en">Return to main page</a>
+  <Countdown />
+  <div class="content">
+    <div class="join-info">
+      <div class="join-java">
+        <h3>Java</h3>
+        <div class="join-field">
+          <p>sosem3.bestmc.fun</p>
+          <button type="button" value="sosem3.bestmc.fun">
+            <Copy />
+          </button>
+        </div>
+      </div>
+      <div class="join-bedrock">
+        <h3>Bedrock</h3>
+        <div class="join-field">
+          <p>sosem3server</p>
+          <button type="button" value="sosem3server">
+            <Copy />
+          </button>
+        </div>
+        <p>
+          Add this <b>gamertag to your Xbox friends</b> and then join the world to
+          play!
+        </p>
+      </div>
+    </div>
+	<h3>Server version: 26.2+</h3>
+  </div>
 </Layout>
+
+<style>
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1080px;
+    padding: 50px 0;
+    margin: 0 auto;
+  }
+
+  .join-info {
+    display: flex;
+    gap: 120px;
+  }
+
+  h3 {
+    font-size: 28px;
+    text-align: center;
+    color: #ffffff7b;
+    margin: 0;
+  }
+
+  .join-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+    width: 260px;
+    margin: 28px 0;
+    border: 3px solid #ffffff7b;
+    border-radius: 10px;
+    color: #ffffff7b;
+  }
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 56px;
+    height: 56px;
+    background-color: transparent;
+    border: none;
+    border-left: 2px solid #ffffff7b;
+  }
+
+  svg {
+    width: 32px;
+    height: 32px;
+    fill: #ffffff7b;
+  }
+
+  p {
+    max-width: 200px;
+    margin: 0 auto;
+    font-size: 18px;
+    color: #ffffff7b;
+    text-align: center;
+  }
+</style>
+
+<script>
+  const joinInfo = document.querySelector(".join-info");
+
+  joinInfo?.addEventListener("click", (e) => {
+    const target = e.target as Element;
+    const button = target?.closest("button");
+    if (!button) {
+      return;
+    }
+
+    navigator.clipboard.writeText(button.value);
+  });
+</script>

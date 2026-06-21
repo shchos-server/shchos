@@ -1,0 +1,61 @@
+---
+const label =
+  Astro.currentLocale === "uk" ? "ДО ПОЧАТКУ СЕРВЕРА" : "TO THE START OF THE SERVER";
+---
+
+<h2>{label}</h2>
+<div id="countdown">
+  <span class="unit days"></span>
+  <span class="unit hours"></span>
+  <span class="unit minutes"></span>
+  <span class="unit seconds"></span>
+</div>
+
+<script>
+  const target = new Date("2026-06-27T17:00:00").getTime();
+
+  const days = document.querySelector(".days") as HTMLElement;
+  const hours = document.querySelector(".hours") as HTMLElement;
+  const minutes = document.querySelector(".minutes") as HTMLElement;
+  const seconds = document.querySelector(".seconds") as HTMLElement;
+
+  function tick() {
+    const diff = target - Date.now();
+    if (diff <= 0) {
+      days.textContent = "Time's up!";
+      return;
+    }
+
+    days.textContent = `${Math.floor(diff / 86400000)}d`;
+    hours.textContent = `${Math.floor(diff / 3600000) % 24}h`;
+    minutes.textContent = `${Math.floor(diff / 60000) % 60}m`;
+    seconds.textContent = `${Math.floor(diff / 1000) % 60}s`;
+  }
+
+  tick();
+  setInterval(tick, 1000);
+</script>
+
+<style>
+   h2 {
+    text-align: center;
+   }
+
+  #countdown {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .unit {
+    display: flex;
+    width: 90px;
+    height: 120px;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+    border: 3px solid #fff;
+    border-radius: 25px;
+    color: #fff;
+  }
+</style>
