@@ -1,30 +1,57 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
-
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 const { pathname } = Astro.url;
 const currentLocale = Astro.currentLocale;
-
 const targetLocale = currentLocale === 'uk' ? 'en' : 'uk';
 
 const base = "";
-let cleanPathname = pathname.replace(base, ""); 
-
+let cleanPathname = pathname.replace(base, "");
 if (currentLocale && cleanPathname.startsWith(`/${currentLocale}`)) {
   cleanPathname = cleanPathname.substring(currentLocale.length + 1);
 }
 
 const targetURL = getRelativeLocaleUrl(targetLocale, cleanPathname);
 
-const label = currentLocale === 'uk' ? 'ua' : 'gb';
+const langMeta = {
+  uk: { flag: 'ua', code: 'UA' },
+  en: { flag: 'gb', code: 'EN' },
+};
+const { flag, code } = currentLocale === 'uk' ? langMeta.uk : langMeta.en;
 ---
 
-<a href={targetURL}><span class=`fi fi-${label}`></span></a>
+<a href={targetURL} class="lang-switcher" aria-label="Switch language">
+  <span class={`fi fi-${flag}`}></span>
+  <span class="lang-code">{code}</span>
+</a>
 
 <style>
-  a span {
-    width: 45px;
-    height: 25px;
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 30px;
+    border: 2px solid #ffffff4d;
+    background-color: transparent;
+    color: white;
+    text-decoration: none;
+  }
+  .lang-switcher:hover {
+    background: #ffffff1a;
+  }
+  .lang-switcher .fi {
+    width: 20px;
+    height: 15px;
+    border-radius: 2px;
+  }
+  .lang-code {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .lang-switcher svg {
+    opacity: 0.7;
   }
 </style>

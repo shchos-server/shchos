@@ -5,7 +5,7 @@ published_at: "2026-06-20"
 last_modified: "2026-06-20"
 source: "https://telegra.ph/Konstituciya-servera-shchos-04-17"
 cover_image: "/logo.gif"
-cover_caption: "Флаг/Ємблема Сервера"
+cover_caption: "Flag/emblem of the server"
 tags: ["constitution", "server", "rules"]
 ---
 
