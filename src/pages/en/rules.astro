@@ -2,14 +2,14 @@
 import Layout from "../../layouts/LayoutEN.astro";
 import { getEntry, render } from "astro:content";
 
-const locale = Astro.currentLocale ?? 'en'
-const rules = await getEntry('rules', locale)
+const locale = Astro.currentLocale ?? "en";
+const rules = await getEntry("rules", locale);
 
 if (!rules) throw new Error(`No rules entry found for locale: ${locale}`);
 
 const { Content } = await render(rules);
 
-const pageTitle = rules.data.title
+const pageTitle = rules.data.title;
 ---
 
 <Layout title={pageTitle}>
@@ -18,9 +18,27 @@ const pageTitle = rules.data.title
   </article>
 </Layout>
 
-<style>
-	.content {
-		max-width: 726px;
-		margin: 0 auto;
-	}
+<style is:global>
+  .content {
+    max-width: 726px;
+    padding: 0 10px;
+    margin: 0 auto;
+  }
+
+  img {
+	display: block;
+	margin: 0 auto
+  }
+
+  img[src*="/logo.gif"] {
+    height: auto;
+	max-width: 420px;
+    width: 100%;
+  }
+
+  blockquote {
+	font-style: italic;
+	font-weight: 400;
+	color: #ffffff7b;
+  }
 </style>
