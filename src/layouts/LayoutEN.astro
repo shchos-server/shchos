@@ -2,6 +2,9 @@
 import LocaleSwitcher from "../components/LocaleSwitcher.astro";
 import JoinServer from "../components/JoinServer.astro";
 
+import '../css/reset.css'
+import 'normalize.css/normalize.css'
+
 const title = Astro.props.title ?? "Щось";
 ---
 
@@ -34,7 +37,6 @@ const title = Astro.props.title ?? "Щось";
       </nav>
       <div class="join">
         <LocaleSwitcher />
-        <JoinServer />
       </div>
     </header>
     <main>
@@ -42,6 +44,12 @@ const title = Astro.props.title ?? "Щось";
     </main>
   </body>
 </html>
+
+<style is:global>
+  * {
+    font-family: "Google Sans", sans-serif;
+  }
+</style>
 
 <style>
   html,
@@ -65,8 +73,17 @@ const title = Astro.props.title ?? "Щось";
     border-bottom: 1px solid #393a3f;
   }
 
+  nav {
+    display: none;
+  }
+
+  @media screen and (min-width: 420px) {
+    nav {
+      display: block;
+    }
+  }
+
   h2 {
-    font-family: "Google Sans", sans-serif;
     font-size: 28px;
     color: #fff;
   }

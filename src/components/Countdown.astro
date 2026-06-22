@@ -1,14 +1,20 @@
 ---
 const label =
-  Astro.currentLocale === "uk" ? "ДО ПОЧАТКУ СЕРВЕРА" : "TO THE START OF THE SERVER";
+  Astro.currentLocale === "uk"
+    ? "ДО ПОЧАТКУ СЕРВЕРА"
+    : "TO THE START OF THE SERVER";
 ---
 
 <h2>{label}</h2>
 <div id="countdown">
-  <span class="unit days"></span>
-  <span class="unit hours"></span>
-  <span class="unit minutes"></span>
-  <span class="unit seconds"></span>
+  <div>
+    <span class="unit days">99d</span>
+    <span class="unit hours">99h</span>
+  </div>
+  <div>
+    <span class="unit minutes">99m</span>
+    <span class="unit seconds">99s</span>
+  </div>
 </div>
 
 <script>
@@ -37,14 +43,22 @@ const label =
 </script>
 
 <style>
-   h2 {
+  h2 {
     text-align: center;
-   }
+    margin-bottom: 10px;
+  }
 
   #countdown {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+
+    div {
+      display: flex;
+      gap: 10px;
+    }
   }
 
   .unit {

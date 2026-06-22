@@ -1,0 +1,42 @@
+---
+const { title, desc, href } = Astro.props
+
+const buttonLabel = Astro.currentLocale === "uk" ? "Перейти" : "Open";
+---
+
+<div class="card">
+    <h2>{title}</h2>
+    <p>{desc}</p>
+    <a href={href}><button type="button">{buttonLabel}</button></a>
+</div>
+
+<style>
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 180px;
+        height: 210px;
+        padding: 10px;
+        padding-top: 20px;
+        border: 2px solid #ffffff7b;
+        border-radius: 20px;
+        color: #fff;
+    }
+    h2, p {
+        margin: 0;
+    }
+
+    a {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+        height: 50px;
+        background-color: #5865f2;
+        border-radius: 20px;
+        color: #fff;
+    }
+</style>
