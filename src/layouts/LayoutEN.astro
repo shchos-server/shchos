@@ -2,10 +2,10 @@
 import LocaleSwitcher from "../components/LocaleSwitcher.astro";
 import JoinServer from "../components/JoinServer.astro";
 
-import '../css/reset.css'
-import 'normalize.css/normalize.css'
+import "../css/reset.css";
+import "normalize.css/normalize.css";
 
-const title = Astro.props.title ?? "Щось";
+const title = Astro.props.title ?? "щось";
 ---
 
 <!doctype html>
@@ -13,6 +13,19 @@ const title = Astro.props.title ?? "Щось";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Official website for Discord server щось (shchos)" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#5865f2" />
+
+    <meta property="og:title" content={title === "щось" ? `щось` : `${title} - щось`} />
+    <meta
+      property="og:description"
+      content="Official website for Discord server щось (shchos)"
+    />
+    <meta property="og:url" content="https://shchos-server.github.io/en" />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:locale:alternate" content="uk_UA" />
+    <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
@@ -22,6 +35,7 @@ const title = Astro.props.title ?? "Щось";
       href="https://fonts.googleapis.com/css2?family=Google+Sans:opsz,wght@17..18,400..700&display=swap"
       rel="stylesheet"
     />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <title>{title}</title>
   </head>
   <body>
@@ -87,7 +101,7 @@ const title = Astro.props.title ?? "Щось";
   }
 
   a {
-	text-decoration: none;
+    text-decoration: none;
   }
 
   ul {
