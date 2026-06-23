@@ -35,9 +35,7 @@ const title = Astro.props.title ?? "Щось";
           <li><a href="/uk/sosem">Sosem</a></li>
         </ul>
       </nav>
-      <div class="join">
         <LocaleSwitcher />
-      </div>
     </header>
     <main>
       <slot />
@@ -97,11 +95,5 @@ const title = Astro.props.title ?? "Щось";
     display: flex;
     gap: 50px;
     list-style: none;
-  }
-
-  .join {
-    display: flex;
-    align-items: center;
-    gap: 25px;
   }
 </style>
