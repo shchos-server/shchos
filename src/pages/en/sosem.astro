@@ -1,11 +1,14 @@
 ---
+import { Image } from "astro:assets";
+
 import Layout from "../../layouts/LayoutUK.astro";
 import Countdown from "../../components/Countdown.astro";
 import Copy from "../../assets/copy.svg";
+
+import Card from "../../components/Card.astro";
 ---
 
 <Layout>
-  
   <div class="content">
     <Countdown />
     <div class="join-info">
@@ -33,6 +36,70 @@ import Copy from "../../assets/copy.svg";
       </div>
     </div>
     <h3>Server version: 26.2+</h3>
+    <div class="cards">
+      <Card title="No speedrunning">
+        <p>For example getting full netherite set on the first day of the server</p>
+        <p>
+          <b>P.s</b> Nether will be opened in a week after start
+        </p>
+      </Card>
+      <Card title="Share stuff">
+        <p>
+          Share stuff with other players especially if you dont need it, remember someone might need it
+        </p>
+      </Card>
+      <Card title="Stay together">
+        <p>
+          Live together, for example in one town, <b
+            >preferably in a radius of 100 blocks</b
+          >
+        </p>
+      </Card>
+      <Card title="Dont Grief">
+        <p>Dont grief other players and keep "good sport"</p>
+      </Card>
+      <Card title="REMEMBER!">
+        <p>
+          Cheats that <b
+            >give you an advantage (X-ray, Auto-Mining, etc.) and/or
+            interrupt servers runtime are not permitted!</b
+          >
+        </p>
+      </Card>
+    </div>
+    <div class="plugins">
+      <div class="bluemap">
+        <div class="info">
+          <Image
+            src="/bluemap.png"
+            alt="Bluemap Logo"
+            width="100"
+            height="100"
+            style={{ borderRadius: "50px" }}
+          />
+          <h2>Bluemap</h2>
+          <p>Server live map</p>
+        </div>
+        <a href="http://srv4506.godlike.club:26148/" target="_blank"
+          ><button type="button">Open</button></a
+        >
+      </div>
+      <div class="simplevoice">
+        <div class="info">
+          <Image
+            src="/simplevoice.png"
+            alt="Simple Voice Chat Logo"
+            width="100"
+            height="100"
+          />
+          <h2>Simple Voice Chat</h2>
+          <p>Proximity voice chat (only on Java Edition!)</p>
+        </div>
+        <a href="https://modrinth.com/plugin/simple-voice-chat" target="_blank"
+          ><button type="button">Download</button></a
+        >
+      </div>
+    </div>
   </div>
 </Layout>
 
@@ -50,14 +117,14 @@ import Copy from "../../assets/copy.svg";
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 70px 0;
+    margin: 50px 0;
     gap: 50px;
   }
 
   h3 {
     font-size: 28px;
     text-align: center;
-    color: #ffffff7b;
+    color: #fff;
     margin: 0;
   }
 
@@ -96,6 +163,74 @@ import Copy from "../../assets/copy.svg";
     font-size: 18px;
     color: #ffffff7b;
     text-align: center;
+  }
+
+  .cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 50px;
+    margin: 50px 0;
+  }
+
+  .plugins {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 50px;
+    max-width: 1216px;
+    height: 350px;
+    padding: 0 25px;
+  }
+
+  @media (max-width: 768px) {
+    .plugins {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      height: auto;
+    }
+  }
+  .bluemap,
+  .simplevoice {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 50px;
+    padding: 30px;
+    border: 2px solid #ffffff7b;
+    border-radius: 20px;
+    text-align: center;
+
+    a {
+      width: 100%;
+    }
+
+    button {
+      width: 100%;
+      height: 50px;
+      background-color: #5865f2;
+      border: none;
+      border-radius: 20px;
+      color: #fff;
+    }
+  }
+
+  .bluemap {
+    background: transparent;
+    background: linear-gradient(
+      174deg,
+      rgba(0, 4, 39, 0) 0%,
+      rgba(6, 23, 144, 1) 100%
+    );
+  }
+
+  .simplevoice {
+    background: transparent;
+    background: linear-gradient(
+      174deg,
+      rgba(0, 4, 39, 0) 0%,
+      rgba(209, 209, 209, 1) 100%
+    );
   }
 </style>
 
