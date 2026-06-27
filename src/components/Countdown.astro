@@ -3,6 +3,16 @@ const label =
   Astro.currentLocale === "uk"
     ? "ДО ПОЧАТКУ СЕРВЕРА"
     : "TO THE START OF THE SERVER";
+
+const joinBefore =
+  Astro.currentLocale === "uk"
+    ? "Спробуйте зайти до того як таймер закінчится"
+    : "Try joining before timer runs out";
+
+const timerDone = 
+  Astro.currentLocale === "uk"
+    ? "СЕРВЕР АКТИВНИЙ ПРЯМО ЗАРАЗ!"
+    : "IT'S ON RIGHT NOW"   
 ---
 
 <h2>{label}</h2>
@@ -16,19 +26,21 @@ const label =
     <span class="unit seconds">99s</span>
   </div>
 </div>
+<p>{joinBefore}</p>
 
-<script>
-  const target = new Date("2026-06-27T16:00:00").getTime();
-6
-  const days = document.querySelector(".days") as HTMLElement;
-  const hours = document.querySelector(".hours") as HTMLElement;
-  const minutes = document.querySelector(".minutes") as HTMLElement;
-  const seconds = document.querySelector(".seconds") as HTMLElement;
+<script define:vars={{ timerDone }} is:inline>
+  const target = new Date("2026-06-27T14:08:00+01:00").getTime();
+
+  const countdown = document.querySelector("#countdown");
+  const days = document.querySelector(".days");
+  const hours = document.querySelector(".hours");
+  const minutes = document.querySelector(".minutes");
+  const seconds = document.querySelector(".seconds");
 
   function tick() {
     const diff = target - Date.now();
     if (diff <= 0) {
-      days.textContent = "Time's up!";
+      countdown.innerHTML = `<h1 style="color: #0f0">${timerDone}</h1>`;
       return;
     }
 
@@ -54,6 +66,7 @@ const label =
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+    margin: 10px 0;
 
     div {
       display: flex;
