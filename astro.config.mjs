@@ -5,7 +5,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://andrii-avramenko.github.io",
+  site: "https://shchos-server.github.io",
 
   i18n: {
     locales: ["en", "uk"],
