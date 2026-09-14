@@ -2,7 +2,7 @@
 title: "Constitution of the server"
 author: "Admin Фіолетовій"
 published_at: "2026-06-20"
-last_modified: "2026-06-20"
+last_modified: "2026-09-14"
 source: "https://telegra.ph/Konstituciya-servera-shchos-04-17"
 cover_image: "/logo.gif"
 cover_caption: "Flag/emblem of the server"
@@ -11,7 +11,7 @@ tags: ["constitution", "server", "rules"]
 
 # Constitution of the server
 
-> **Admin Фіолетовій** · *2026-06-20*
+> **Admin Фіолетовій** · *2026-09-14*
 
 ![Flag/emblem of the server](/logo.gif)
 
@@ -37,6 +37,8 @@ tags: ["constitution", "server", "rules"]
 3. insulting family members
 4. insulting kittens
 5. Being a loser.
+6. Ban can only be given if rules were broken
+7. El pantera koch golda
 
 ---
 
@@ -71,6 +73,9 @@ tags: ["constitution", "server", "rules"]
 3. Press the nuclear launch button
 4. U need to be a Femboy
 5. Vaping and smoking (autism)
+6. When u get lvl 15 u can get custom role
+7. When u get lvl 30 u can ping @everyone
+8. When u get lvl 50 u can send shi in #updates
 
 ---
 
