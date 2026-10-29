@@ -1,5 +1,6 @@
 ---
 import LocaleSwitcher from "../components/LocaleSwitcher.astro";
+import DiscordAccount from "../components/DiscordAccount.astro";
 import JoinServer from "../components/JoinServer.astro";
 
 import "../css/reset.css";
@@ -49,7 +50,10 @@ const title = Astro.props.title ?? "щось";
           <!-- <li><a href="/en/sosem">Sosem</a></li> -->
         </ul>
       </nav>
-      <LocaleSwitcher />
+      <div class="header-actions">
+        <DiscordAccount locale="en" />
+        <LocaleSwitcher />
+      </div>
     </header>
     <main>
       <slot />
@@ -83,7 +87,12 @@ const title = Astro.props.title ?? "щось";
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #393a3f;
+    flex-wrap: wrap;
+    gap: 16px;
   }
+
+  .header-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-left: auto; }
+  @media screen and (max-width: 600px) { header { padding: 10px 16px; } }
 
   nav {
     display: none;

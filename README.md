@@ -1,46 +1,107 @@
-# Astro Starter Kit: Basics
+# щось — сайт Discord-сервера
+
+Статический сайт на Astro с входом через Discord OAuth2 и серверной проверкой прав в Netlify Functions.
+
+## Что реализовано
+
+- Кнопки входа и выхода в украинской и английской версиях сайта.
+- Обмен OAuth-кода на токен только в серверной функции.
+- Зашифрованная сессия в HttpOnly, Secure, SameSite=Lax cookie; срок — максимум один час. После истечения нужен повторный вход.
+- Проверка владельца сервера, разрешения **Administrator** и дополнительных ролей. Права запрашиваются у Discord заново при проверке доступа.
+- Защита OAuth через случайный state, проверка Origin при выходе, запрет кэширования ответов с данными пользователя.
+
+**Рапорты пока не подключены к этой системе.** Страница `/uk/report` содержит прежнюю форму Netlify Forms. Наличие входа не защищает её отправку и не подтверждает автора. Хранение жалоб и административная страница — следующий этап.
+
+## 1. Создать приложение Discord
+
+1. Откройте [Discord Developer Portal](https://discord.com/developers/applications), нажмите **New Application** и задайте название, например «щось».
+2. В разделе **OAuth2** скопируйте **Client ID** и **Client Secret**. Секрет вводите только в переменные окружения, не в код и не в чат.
+3. В **OAuth2 → Redirects** добавьте точный адрес:
+
+   ```text
+   https://ВАШ-ДОМЕН/api/auth/callback
+   ```
+
+   Например: `https://example.netlify.app/api/auth/callback`. Для собственного домена используйте его. Протокол, домен, путь и завершающий слеш должны совпадать с настройками приложения; в этом проекте слеша после callback нет.
+
+4. Сохраните изменения. Создавать и приглашать бота для этого способа входа не требуется.
+
+Код запрашивает `identify`, `guilds`, `guilds.members.read`: профиль, список серверов с правами пользователя и его роли на выбранном сервере. Почта, сообщения и пароль Discord не запрашиваются.
+
+## 2. Настроить Netlify
+
+В настройках проекта откройте **Environment variables** и добавьте значения из `.env.example`. Они должны быть доступны **Functions** в нужном контексте деплоя. Не используйте префикс `PUBLIC_`.
+
+| Переменная | Значение |
+| --- | --- |
+| `SITE_URL` | Основной адрес сайта, например `https://example.netlify.app`, без пути |
+| `DISCORD_CLIENT_ID` | Client ID приложения Discord |
+| `DISCORD_CLIENT_SECRET` | Client Secret приложения Discord |
+| `DISCORD_GUILD_ID` | ID вашего Discord-сервера |
+| `DISCORD_ADMIN_ROLE_IDS` | Необязательно: ID ролей через запятую, которым также разрешён просмотр жалоб |
+| `SESSION_SECRET` | Случайный ключ: 64 шестнадцатеричных символа |
+
+Сгенерировать ключ локально:
 
 ```sh
-npm create astro@latest -- --template basics
+node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Чтобы скопировать ID сервера или роли, включите **Developer Mode / Режим разработчика** в Discord. Используйте ID, а не название сервера или роли.
 
-## 🚀 Project Structure
+Владелец сервера и участники с разрешением **Administrator** получают доступ без заполнения `DISCORD_ADMIN_ROLE_IDS`. Дополнительная роль предоставляет доступ только на сайте; выдавать ей полные права Discord не нужно. Администратор другого сервера доступа не получает. Обычный пользователь может войти, но не становится администратором.
 
-Inside of your Astro project, you'll see the following folders and files:
+После добавления переменных выполните новый деплой. `netlify.toml` уже задаёт команду `npm run build`, каталог публикации `dist` и каталог функций `netlify/functions`.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+**Netlify Identity включать не нужно:** в его стандартном списке провайдеров нет Discord. В этом проекте используется отдельный OAuth-вход. **Database для самого входа пока не нужна.**
+
+Выберите один основной домен. Запросы авторизации на другом домене или Deploy Preview отклоняются. Для отдельного тестового деплоя задайте собственный `SITE_URL`, ключ сессии и зарегистрируйте соответствующий callback в Discord. Не передавайте production-секреты недоверенным превью.
+
+## 3. Проверить вход
+
+1. Откройте `/uk` или `/en` на настроенном домене и нажмите кнопку Discord.
+2. Подтвердите доступ в Discord. После возвращения должны появиться имя и кнопка выхода.
+3. У владельца сервера / администратора / участника разрешённой роли появляется отметка администратора.
+4. Проверьте обычную учётную запись: отметки быть не должно. После снятия разрешённой роли обновите страницу — права будут запрошены заново.
+5. Проверьте отмену авторизации и выход.
+
+Секреты приложения нужны для настоящего входа. Автоматические тесты используют подставные ответы Discord и не заменяют эту проверку после деплоя.
+
+## Локальная разработка
+
+```sh
+npm install
+npm run dev
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+`npm run dev` запускает только Astro. Для работы функций установите [Netlify CLI](https://docs.netlify.com/cli/get-started/), скопируйте `.env.example` в `.env`, заполните значения и задайте `SITE_URL=http://localhost:8888`. Добавьте `http://localhost:8888/api/auth/callback` в Redirects приложения Discord, затем запустите:
 
-## 🧞 Commands
+```sh
+netlify dev
+```
 
-All commands are run from the root of the project, from a terminal:
+Открывайте сайт на **http://localhost:8888**, чтобы запросы проходили через Netlify Functions. Локально cookie работает без Secure; на HTTPS она использует Secure и префикс __Host-.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```sh
+npm test
+npm run build
+```
 
-## 👀 Want to learn more?
+## Как затем подключить жалобы
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Схема: браузер → Netlify Function → проверка сессии и прав → Netlify Database. Доступа к базе из браузера быть не должно.
+
+- `POST /api/reports`: проверить Origin через `checkOrigin`, получить автора из `requireUser`, проверить актуальное членство через `permissions`, провалидировать поля и сохранить жалобу. ID автора берётся из сессии, не из отправленной формы. Добавить ограничение частоты отправки и размера текста.
+- `GET /api/admin/reports`: вызвать `requireAdmin(request)` **до** чтения базы. Эта функция уже есть в `src/server/auth.mjs` и заново проверяет права через Discord.
+- Административная страница загружает данные только из защищённой функции. Скрытие ссылки или `isAdmin` в браузере не являются защитой.
+- В таблице хранить ID жалобы, Discord ID автора, тип, тему, описание, дату и статус. Не включать жалобы в статическую сборку Astro.
+- При подключении этой схемы убрать прямую отправку текущей формы в Netlify Forms, иначе останется отдельный канал без проверки Discord-автора.
+
+Сейчас выход удаляет cookie в текущем браузере, но не отзывает разрешение приложения в Discord. Сессия самодостаточна и не имеет серверного списка отзыва: скопированная cookie может оставаться действительной до истечения часа. Для централизованного отзыва сессий при дальнейшем развитии храните сессии в базе, а в cookie — только случайный идентификатор. `SESSION_SECRET` можно заменить, чтобы завершить все текущие сессии. Если Discord недоступен или ограничивает запросы, проверка прав отклоняет доступ; сохранённый флаг администратора не используется.
+
+## Документация
+
+- [Discord OAuth2](https://docs.discord.com/developers/topics/oauth2)
+- [Discord: текущий пользователь, серверы и роли](https://docs.discord.com/developers/resources/user)
+- [Netlify Functions](https://docs.netlify.com/build/functions/get-started/)
+- [Провайдеры Netlify Identity](https://docs.netlify.com/manage/security/secure-access-to-sites/identity/registration-login/)
