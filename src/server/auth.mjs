@@ -132,7 +132,7 @@ export async function permissions(session, cfg = settings()) {
   return { isMember: !!member, isAdmin: !!member?.roles?.some(id => cfg.roles.includes(id)) };
 }
 
-// Future report-reading endpoints must call this before querying the database.
+// Report-reading endpoints call this before querying the database.
 export async function requireAdmin(req, cfg = settings()) {
   const session = requireUser(req, cfg);
   if (!(await permissions(session, cfg)).isAdmin) throw new AuthError(403, "forbidden");

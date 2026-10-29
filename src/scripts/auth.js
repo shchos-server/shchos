@@ -1,6 +1,11 @@
+import { getSession } from "./session.js";
+
 async function initializeAccount(root) {
   const english = root.dataset.locale === "en";
   const login = root.querySelector("[data-login]");
+  const loginUrl = new URL(login.href);
+  loginUrl.searchParams.set("returnTo", window.location.pathname);
+  login.href = loginUrl.toString();
   const logout = root.querySelector("[data-logout]");
   const profile = root.querySelector("[data-profile]");
   const status = root.querySelector("[data-auth-status]");
@@ -24,7 +29,7 @@ async function initializeAccount(root) {
     history.replaceState(null, "", url);
   }
   try {
-    const result = await fetch("/api/auth/session", { credentials: "same-origin", cache: "no-store" });
+    const result = await getSession();
     if (result.status !== 401) {
       const data = await result.json();
       if (!result.ok) {
@@ -32,6 +37,7 @@ async function initializeAccount(root) {
       } else {
         root.querySelector("[data-name]").textContent = data.user.name;
         root.querySelector("[data-admin]").hidden = !data.isAdmin;
+        root.querySelector("[data-admin-link]").hidden = !data.isAdmin;
         login.hidden = true;
         logout.hidden = false;
         profile.hidden = false;

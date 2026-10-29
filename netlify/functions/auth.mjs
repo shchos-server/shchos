@@ -13,10 +13,14 @@ function redirect(location, cookies = []) {
 
 function landing(locale) { return locale === "en" ? "/en" : "/uk"; }
 
+function destination(locale, returnTo) {
+  return /^\/(uk|en)\/(report|admin)\/?$/.test(returnTo ?? "") ? returnTo : landing(locale);
+}
+
 async function callback(req, url, cfg) {
   const state = unseal(readCookie(req, "oauth", cfg), "oauth", cfg);
   const clearState = cookie("oauth", "", 0, cfg);
-  const fail = (code) => redirect(`${landing(state?.locale)}?auth_error=${code}`, [clearState]);
+  const fail = (code) => redirect(`${destination(state?.locale, state?.returnTo)}?auth_error=${code}`, [clearState]);
   const received = Buffer.from(url.searchParams.get("state") ?? "");
   const expected = Buffer.from(state?.nonce ?? "");
   if (!state || received.length !== expected.length || !timingSafeEqual(received, expected)) return fail("invalid_state");
@@ -45,7 +49,7 @@ async function callback(req, url, cfg) {
       accessToken: token.access_token, exp: Date.now() + lifetime * 1000,
     }, "session", cfg);
     if (session.length > 3800) return fail("failed");
-    return redirect(landing(state.locale), [clearState, cookie("session", session, lifetime, cfg)]);
+    return redirect(destination(state.locale, state.returnTo), [clearState, cookie("session", session, lifetime, cfg)]);
   } catch { return fail("failed"); }
 }
 
@@ -62,7 +66,8 @@ export default async function handler(req) {
     if (path === "/api/auth/discord") {
       const locale = url.searchParams.get("locale") === "en" ? "en" : "uk";
       const nonce = randomBytes(32).toString("base64url");
-      const state = seal({ nonce, locale, exp: Date.now() + 600_000 }, "oauth", cfg);
+      const returnTo = destination(locale, url.searchParams.get("returnTo"));
+      const state = seal({ nonce, locale, returnTo, exp: Date.now() + 600_000 }, "oauth", cfg);
       const target = new URL("https://discord.com/oauth2/authorize");
       target.search = new URLSearchParams({
         client_id: cfg.clientId, redirect_uri: cfg.redirectUri, response_type: "code",

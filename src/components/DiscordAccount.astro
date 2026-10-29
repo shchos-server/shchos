@@ -2,28 +2,86 @@
 const { locale = "uk" } = Astro.props;
 const english = locale === "en";
 ---
+
 <div class="discord-account" data-discord-account data-locale={locale}>
   <a data-login href={`/api/auth/discord?locale=${locale}`}>
-    {english ? "Sign in with Discord" : "Увійти через Discord"}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height="20"
+      fill="#fefefe"
+      preserveAspectRatio="xMidYMid"
+      viewBox="0 -28.5 256 256"
+    >
+      <path
+        fill="#fff"
+        d="M216.86 16.6A209 209 0 0 0 164.04 0a155 155 0 0 0-6.76 14.05 194 194 0 0 0-58.54 0C96.91 9.65 94.2 4.1 91.9 0a208 208 0 0 0-52.86 16.64C5.62 67.14-3.44 116.4 1.1 164.96c22.17 16.55 43.65 26.6 64.77 33.19a161 161 0 0 0 13.88-22.85 136 136 0 0 1-21.85-10.63q2.75-2.05 5.35-4.24c42.13 19.7 87.9 19.7 129.51 0q2.64 2.2 5.36 4.24a136 136 0 0 1-21.89 10.65c4.01 8.02 8.64 15.67 13.88 22.85 21.14-6.58 42.64-16.64 64.81-33.21 5.32-56.3-9.08-105.1-38.05-148.36M85.47 135.1c-12.64 0-23.01-11.81-23.01-26.19 0-14.37 10.15-26.2 23.01-26.2s23.24 11.8 23.02 26.2c.02 14.38-10.15 26.18-23.02 26.18m85.06 0c-12.65 0-23.02-11.81-23.02-26.19 0-14.37 10.15-26.2 23.02-26.2s23.23 11.8 23.01 26.2c0 14.38-10.15 26.18-23.01 26.18"
+      ></path>
+    </svg>
+    <p>{english ? "Sign in" : "Увійти"}</p>
   </a>
   <span data-profile hidden>
     <span data-name></span>
     <span data-admin hidden>{english ? "Administrator" : "Адміністратор"}</span>
   </span>
-  <button data-logout type="button" hidden>{english ? "Sign out" : "Вийти"}</button>
+  <button data-logout type="button" hidden
+    >{english ? "Sign out" : "Вийти"}</button
+  >
+  <a data-admin-link href={`/${locale}/admin`} hidden
+    >{english ? "Reports" : "Рапорти"}</a
+  >
   <span class="status" data-auth-status role="status" aria-live="polite"></span>
 </div>
 
 <script src="../scripts/auth.js"></script>
 
 <style>
-  .discord-account { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 8px; font-size: 14px; }
-  a, button { padding: 8px 12px; border-radius: 8px; color: #fff; background: #4752c4; font: inherit; text-decoration: none; }
-  a:hover, button:hover { background: #5865f2; }
-  a:focus-visible, button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
-  [data-name] { overflow-wrap: anywhere; }
-  [data-admin] { margin-left: 6px; font-size: 12px; color: #bdc5ff; }
-  .status { flex-basis: 100%; max-width: 300px; color: #d5d7e0; font-size: 12px; }
-  .status:empty { display: none; }
-  [hidden] { display: none !important; }
+  .discord-account {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 14px;
+  }
+  a,
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 30px;
+    border: 2px solid #ffffff4d;
+    background-color: transparent;
+    color: white;
+    text-decoration: none;
+  }
+  a:hover,
+  button:hover {
+    background: #5865f2;
+  }
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+  [data-name] {
+    overflow-wrap: anywhere;
+  }
+  [data-admin] {
+    margin-left: 6px;
+    font-size: 12px;
+    color: #bdc5ff;
+  }
+  .status {
+    max-width: 300px;
+    color: #d5d7e0;
+    text-wrap: wrap;
+    font-size: 12px;
+  }
+  .status:empty {
+    display: none;
+  }
+  [hidden] {
+    display: none !important;
+  }
 </style>

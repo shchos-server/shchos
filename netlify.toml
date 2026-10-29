@@ -11,3 +11,8 @@
   targetPort = 4321
   port = 8888
   autoLaunch = false
+
+[[redirects]]
+  from = "/admin"
+  to = "/uk/admin"
+  status = 302

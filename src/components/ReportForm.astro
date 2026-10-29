@@ -1,0 +1,94 @@
+---
+const { locale = "uk" } = Astro.props;
+const en = locale === "en";
+import "../css/reports.css";
+---
+
+<section
+  class="reports-page report-compose"
+  data-report-page
+  data-locale={locale}
+>
+  <h1>{en ? "Submit a report" : "Надіслати рапорт"}</h1>
+  <p class="intro">
+    {
+      en
+        ? "Tell the server team what happened. Only administrators can read your report."
+        : "Розкажіть команді сервера, що сталося. Ваш рапорт бачать лише адміністратори."
+    }
+  </p>
+  <div class="notice" data-access role="status">
+    {en ? "Checking your account…" : "Перевіряємо ваш обліковий запис…"}
+  </div>
+  <a
+    class="action"
+    data-report-login
+    hidden
+    href={`/api/auth/discord?locale=${locale}&returnTo=/${locale}/report`}
+    >{en ? "Sign in with Discord" : "Увійти через Discord"}</a
+  >
+  <noscript
+    ><p>
+      {
+        en
+          ? "Enable JavaScript to sign in and submit a report."
+          : "Увімкніть JavaScript, щоб увійти та надіслати рапорт."
+      }
+    </p></noscript
+  >
+  <form data-report-form>
+    <fieldset data-fields disabled>
+      <legend class="sr-only">{en ? "Report details" : "Дані рапорту"}</legend>
+      <label for="type">{en ? "Report type" : "Тип рапорту"}</label>
+      <select name="type" id="type" required>
+        <option value="discord">Discord</option>
+        <option value="minecraft">Minecraft</option>
+        <option value="other">{en ? "Other" : "Інше"}</option>
+      </select>
+      <label for="subject">{en ? "Subject" : "Тема"}</label>
+      <input
+        type="text"
+        name="subject"
+        id="subject"
+        minlength="3"
+        maxlength="120"
+        required
+        placeholder={en
+          ? "Briefly describe the issue"
+          : "Коротко опишіть проблему"}
+      />
+      <label for="comment">{en ? "What happened?" : "Що сталося?"}</label>
+      <textarea
+        name="comment"
+        id="comment"
+        minlength="20"
+        maxlength="5000"
+        rows="8"
+        required
+        aria-describedby="comment-help comment-count"
+        placeholder={en
+          ? "Include who was involved, when it happened and links to relevant messages or evidence."
+          : "Вкажіть учасників, час події та додайте посилання на відповідні повідомлення або докази."}
+      ></textarea>
+      <div class="field-help">
+        <span id="comment-help"
+          >{en ? "20–5,000 characters" : "20–5 000 символів"}</span
+        >
+        <span id="comment-count"><span data-counter>0</span> / 5 000</span>
+      </div>
+      <p class="privacy">
+        {
+          en
+            ? "Your Discord name and ID will be attached automatically. Do not include passwords or access tokens."
+            : "Ваше ім’я та айді буде додано автоматично. Не вказуйте жодні паролі або коди доступу."
+        }
+      </p>
+      <button class="action" type="submit" data-submit
+        >{en ? "Submit report" : "Надіслати рапорт"}</button
+      >
+    </fieldset>
+    <div class="notice" data-result role="status" aria-live="polite" hidden>
+    </div>
+  </form>
+</section>
+<script src="../scripts/report.js"></script>

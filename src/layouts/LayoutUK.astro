@@ -19,6 +19,7 @@ const title = Astro.props.title ?? "щось";
       content="Офіційний сайт дискорд серверу щось"
     />
     <meta name="color-scheme" content="dark" />
+    {Astro.props.noindex && <meta name="robots" content="noindex,nofollow" />}
     <meta name="theme-color" content="#5865f2" />
 
     <meta property="og:title" content={title === "щось" ? `щось` : `${title} - щось`} />
@@ -49,7 +50,8 @@ const title = Astro.props.title ?? "щось";
       </a>
       <nav>
         <ul>
-          <li><a href="/uk/rules">Rules</a></li>
+          <li><a href="/uk/rules">Правила</a></li>
+          <li><a href="/uk/report">Рапорт</a></li>
           <!-- <li><a href="/uk/sosem">Sosem</a></li> -->
         </ul>
       </nav>
@@ -98,7 +100,7 @@ const title = Astro.props.title ?? "щось";
   @media screen and (max-width: 600px) { header { padding: 10px 16px; } }
 
   nav {
-    display: none;
+    display: block;
   }
 
   @media screen and (min-width: 420px) {
@@ -119,7 +121,8 @@ const title = Astro.props.title ?? "щось";
 
   ul {
     display: flex;
-    gap: 50px;
+    gap: 20px;
+    flex-wrap: wrap;
     list-style: none;
   }
 </style>

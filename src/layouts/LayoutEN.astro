@@ -14,11 +14,18 @@ const title = Astro.props.title ?? "щось";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Official website for Discord server щось (shchos)" />
+    <meta
+      name="description"
+      content="Official website for Discord server щось (shchos)"
+    />
     <meta name="color-scheme" content="dark" />
+    {Astro.props.noindex && <meta name="robots" content="noindex,nofollow" />}
     <meta name="theme-color" content="#5865f2" />
 
-    <meta property="og:title" content={title === "щось" ? `щось` : `${title} - щось`} />
+    <meta
+      property="og:title"
+      content={title === "щось" ? `щось` : `${title} - щось`}
+    />
     <meta
       property="og:description"
       content="Official website for Discord server щось (shchos)"
@@ -27,7 +34,7 @@ const title = Astro.props.title ?? "щось";
     <meta property="og:locale" content="en_GB" />
     <meta property="og:locale:alternate" content="uk_UA" />
     <meta property="og:type" content="website" />
-    
+
     <link rel="icon" href="/favicon.gif" />
     <meta name="generator" content={Astro.generator} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -47,6 +54,7 @@ const title = Astro.props.title ?? "щось";
       <nav>
         <ul>
           <li><a href="/en/rules">Rules</a></li>
+          <li><a href="/en/report">Report</a></li>
           <!-- <li><a href="/en/sosem">Sosem</a></li> -->
         </ul>
       </nav>
@@ -91,11 +99,21 @@ const title = Astro.props.title ?? "щось";
     gap: 16px;
   }
 
-  .header-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-left: auto; }
-  @media screen and (max-width: 600px) { header { padding: 10px 16px; } }
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-left: auto;
+  }
+  @media screen and (max-width: 600px) {
+    header {
+      padding: 10px 16px;
+    }
+  }
 
   nav {
-    display: none;
+    display: block;
   }
 
   @media screen and (min-width: 420px) {
@@ -115,7 +133,8 @@ const title = Astro.props.title ?? "щось";
 
   ul {
     display: flex;
-    gap: 50px;
+    gap: 20px;
+    flex-wrap: wrap;
     list-style: none;
   }
 </style>

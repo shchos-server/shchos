@@ -1,56 +1,8 @@
 ---
 import Layout from "../../layouts/LayoutUK.astro";
+import ReportForm from "../../components/ReportForm.astro";
 ---
 
-<Layout>
-  <div class="content">
-    <h2>Рапорт</h2>
-    <form data-netlify="true">
-      <label for="type">Оберіть тип рапорту:</label>
-
-      <label>Discord</label><input
-        type="radio"
-        name="type"
-        id="discord"
-        checked
-      />
-      <label>Minecraft</label><input
-        type="radio"
-        name="type"
-        id="minecraft"
-        checked
-      />
-      <label>Other</label><input type="radio" name="type" id="other" checked />
-      <br />
-      <label for="subject">Тема:</label>
-      <input type="text" name="subject" id="subject" />
-      <label for="comment">Опис:</label>
-      <textarea name="comment" id="comment" minlength="20" required></textarea>
-      <div>
-        <p>Щонайменше 20 символів</p>
-        <p>
-          Введено: <span id="comment-counter">0</span>
-        </p>
-      </div>
-      <button type="submit">Надіслати</button>
-    </form>
-  </div>
+<Layout title="Рапорт — щось">
+  <ReportForm locale="uk" />
 </Layout>
-
-<script src="../../scripts/report.js"></script>
-
-<style>
-  .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 1080px;
-    padding: 50px 0;
-    margin: 0 auto;
-  }
-
-  h2 {
-    font-size: 36px;
-    margin-bottom: 30px;
-  }
-</style>

@@ -60,6 +60,16 @@ test("callback rejects missing, expired and mismatched state before contacting D
   }
 });
 
+test("OAuth remembers report/admin pages and rejects external or arbitrary return destinations", async () => {
+  const cfg = setup();
+  for (const [path, expected] of [["/uk/report", "/uk/report"], ["/en/admin", "/en/admin"],
+    ["https://evil.example", "/uk"], ["//evil.example", "/uk"], ["/api/auth/logout", "/uk"]]) {
+    const result = await handler(request(`discord?returnTo=${encodeURIComponent(path)}`));
+    const stateValue = result.headers.getSetCookie()[0].split(";")[0].split("=")[1];
+    assert.equal(unseal(stateValue, "oauth", cfg).returnTo, expected);
+  }
+});
+
 test("callback establishes a bounded encrypted session without exposing Discord tokens", async () => {
   const cfg = setup();
   const start = await handler(request("discord?locale=en"));

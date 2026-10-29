@@ -1,0 +1,47 @@
+---
+const { locale = "uk" } = Astro.props;
+const en = locale === "en";
+import "../css/reports.css";
+---
+
+<section class="reports-page" data-admin-page data-locale={locale}>
+  <div class="page-heading">
+    <div>
+      <h1>{en ? "Reports" : "Рапорти"}</h1>
+      <p class="intro">
+        {
+          en
+            ? "Reports from server members, newest first."
+            : "Звернення учасників сервера — спочатку найновіші."
+        }
+      </p>
+    </div>
+    <button type="button" class="action secondary" data-refresh
+      >{en ? "Refresh" : "Оновити"}</button
+    >
+  </div>
+  <div class="notice" data-admin-message role="status" aria-live="polite">
+    {en ? "Checking access…" : "Перевіряємо доступ…"}
+  </div>
+  <a
+    class="action"
+    data-admin-login
+    hidden
+    href={`/api/auth/discord?locale=${locale}&returnTo=/${locale}/admin`}
+    >{en ? "Sign in with Discord" : "Увійти через Discord"}</a
+  >
+  <noscript
+    ><p>
+      {
+        en
+          ? "Enable JavaScript to view reports."
+          : "Увімкніть JavaScript, щоб переглянути рапорти."
+      }
+    </p></noscript
+  >
+  <div class="report-list" data-report-list></div>
+  <button class="action secondary" type="button" data-more hidden
+    >{en ? "Load older reports" : "Завантажити попередні"}</button
+  >
+</section>
+<script src="../scripts/admin-reports.js"></script>
