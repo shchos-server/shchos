@@ -1,5 +1,5 @@
 import { randomBytes, timingSafeEqual } from "node:crypto";
-import { AuthError, settings, seal, unseal, cookie, readCookie, response, checkOrigin, requireUser, discord, permissions } from "../../src/server/auth.mjs";
+import { AuthError, ConfigurationError, settings, seal, unseal, cookie, readCookie, response, checkOrigin, requireUser, discord, permissions } from "../../src/server/auth.mjs";
 
 export const config = {
   path: ["/api/auth/discord", "/api/auth/callback", "/api/auth/session", "/api/auth/logout"],
@@ -86,7 +86,10 @@ export default async function handler(req) {
     return response({ error: "not_found" }, 404);
   } catch (error) {
     const status = error instanceof AuthError ? error.status : 503;
-    const result = response({ error: error instanceof AuthError ? error.message : "discord_unavailable" }, status);
+    const result = response({
+      error: error instanceof AuthError ? error.message : "discord_unavailable",
+      ...(error instanceof ConfigurationError ? { issues: error.issues } : {}),
+    }, status);
     if (cfg && status === 401) result.headers.set("Set-Cookie", cookie("session", "", 0, cfg));
     return result;
   }

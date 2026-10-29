@@ -115,7 +115,40 @@ test("anonymous sessions are 401 and missing configuration fails closed", async 
   delete process.env.SESSION_SECRET;
   const result = await handler(request("discord"));
   assert.equal(result.status, 503);
-  assert.deepEqual(await result.json(), { error: "not_configured" });
+  assert.deepEqual(await result.json(), {
+    error: "not_configured", issues: [{ variable: "SESSION_SECRET", reason: "missing" }],
+  });
+});
+
+test("configuration diagnostics identify every invalid field without disclosing values", async () => {
+  setup();
+  Object.assign(process.env, {
+    SITE_URL: "https://example.com/api/auth/callback", DISCORD_CLIENT_ID: "client-value",
+    DISCORD_GUILD_ID: "guild-value", SESSION_SECRET: "private-key-value",
+    DISCORD_ADMIN_ROLE_IDS: "role-name", DISCORD_CLIENT_SECRET: "private-client-secret",
+  });
+  const result = await handler(request("discord"));
+  assert.equal(result.status, 503);
+  const body = await result.json();
+  assert.deepEqual(body.issues.map(issue => issue.variable).sort(), [
+    "DISCORD_CLIENT_ID", "DISCORD_GUILD_ID", "SESSION_SECRET", "SITE_URL", "DISCORD_ADMIN_ROLE_IDS",
+  ].sort());
+  const serialized = JSON.stringify(body);
+  for (const value of ["client-value", "guild-value", "private-key-value", "role-name", "private-client-secret", "https://example.com"]) {
+    assert.ok(!serialized.includes(value));
+  }
+});
+
+test("missing settings are all reported instead of masking later errors", async () => {
+  setup();
+  for (const name of ["SITE_URL", "DISCORD_CLIENT_ID", "DISCORD_CLIENT_SECRET", "DISCORD_GUILD_ID", "SESSION_SECRET"]) {
+    delete process.env[name];
+  }
+  const result = await handler(request("discord"));
+  assert.equal(result.status, 503);
+  const body = await result.json();
+  assert.equal(body.issues.length, 5);
+  assert.ok(body.issues.every(issue => issue.reason === "missing"));
 });
 
 test("session returns only public user information and live admin status", async () => {

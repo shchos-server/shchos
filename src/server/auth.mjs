@@ -7,19 +7,38 @@ export class AuthError extends Error {
   }
 }
 
+export class ConfigurationError extends AuthError {
+  constructor(issues) {
+    super(503, "not_configured");
+    // Only fixed variable names and validation messages; never include values.
+    this.issues = issues;
+  }
+}
+
 export function settings() {
   const { SITE_URL, DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, DISCORD_GUILD_ID, SESSION_SECRET } = process.env;
-  if (!SITE_URL || !/^\d{17,20}$/.test(DISCORD_CLIENT_ID ?? "") || !DISCORD_CLIENT_SECRET ||
-      !/^\d{17,20}$/.test(DISCORD_GUILD_ID ?? "") || !/^[a-f\d]{64}$/i.test(SESSION_SECRET ?? "")) {
-    throw new AuthError(503, "not_configured");
+  const issues = [];
+  for (const [variable, value, pattern, format] of [
+    ["DISCORD_CLIENT_ID", DISCORD_CLIENT_ID, /^\d{17,20}$/, "expected_17_to_20_digits"],
+    ["DISCORD_GUILD_ID", DISCORD_GUILD_ID, /^\d{17,20}$/, "expected_17_to_20_digits"],
+    ["SESSION_SECRET", SESSION_SECRET, /^[a-f\d]{64}$/i, "expected_64_hex_characters"],
+  ]) {
+    if (!value) issues.push({ variable, reason: "missing" });
+    else if (!pattern.test(value)) issues.push({ variable, reason: format });
   }
+  if (!DISCORD_CLIENT_SECRET?.trim()) issues.push({ variable: "DISCORD_CLIENT_SECRET", reason: "missing" });
   let site;
-  try { site = new URL(SITE_URL); } catch { throw new AuthError(503, "not_configured"); }
-  const local = site.protocol === "http:" && ["localhost", "127.0.0.1"].includes(site.hostname);
-  if ((!local && site.protocol !== "https:") || site.username || site.password ||
-      site.pathname !== "/" || site.search || site.hash) throw new AuthError(503, "not_configured");
+  try { site = new URL(SITE_URL); } catch { /* Report the variable name below. */ }
+  const local = site?.protocol === "http:" && ["localhost", "127.0.0.1"].includes(site.hostname);
+  if (!site || (!local && site.protocol !== "https:") || site.username || site.password ||
+      site.pathname !== "/" || site.search || site.hash) {
+    issues.push({ variable: "SITE_URL", reason: SITE_URL ? "expected_https_origin_without_path" : "missing" });
+  }
   const roles = (process.env.DISCORD_ADMIN_ROLE_IDS ?? "").split(",").map(id => id.trim()).filter(Boolean);
-  if (roles.some(id => !/^\d{17,20}$/.test(id))) throw new AuthError(503, "not_configured");
+  if (roles.some(id => !/^\d{17,20}$/.test(id))) {
+    issues.push({ variable: "DISCORD_ADMIN_ROLE_IDS", reason: "expected_comma_separated_role_ids" });
+  }
+  if (issues.length) throw new ConfigurationError(issues);
   return {
     origin: site.origin, secure: !local, clientId: DISCORD_CLIENT_ID,
     clientSecret: DISCORD_CLIENT_SECRET, guildId: DISCORD_GUILD_ID, roles,
