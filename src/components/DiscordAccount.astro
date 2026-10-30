@@ -7,8 +7,8 @@ const english = locale === "en";
   <a data-login href={`/api/auth/discord?locale=${locale}`}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      height="20"
-      fill="#fefefe"
+      height="15"
+      fill="#fff"
       preserveAspectRatio="xMidYMid"
       viewBox="0 -28.5 256 256"
     >
@@ -21,7 +21,7 @@ const english = locale === "en";
   </a>
   <span data-profile hidden>
     <span data-name></span>
-    <span data-admin hidden>{english ? "Administrator" : "Адміністратор"}</span>
+    <span data-admin hidden>{english ? "Admin" : "Адмін"}</span>
   </span>
   <button data-logout type="button" hidden
     >{english ? "Sign out" : "Вийти"}</button
@@ -41,7 +41,10 @@ const english = locale === "en";
     justify-content: flex-end;
     flex-wrap: wrap;
     gap: 8px;
-    font-size: 14px;
+    font-size: 13px;
+    letter-spacing: 0.4em;
+    font-weight: 600;
+    transition: all 250ms cubic-bezier(.645, .045, .355, 1);
   }
   a,
   button {
