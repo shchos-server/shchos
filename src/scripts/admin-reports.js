@@ -37,6 +37,7 @@ function initializeAdmin(root) {
     // Treat all submitted content as text, including HTML and evidence URLs.
     content.append(element("p", report.description, "report-body"));
     details.append(summary, content);
+    console.log(details)
     return details;
   }
 

@@ -13,11 +13,17 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "^7.1.2",
     "@astrojs/sitemap": "^3.7.4",
     "@netlify/database": "^2.0.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "astro": "^7.4.4",
+    "axios": "^1.21.0",
     "flag-icons": "^7.5.0",
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.2.17"

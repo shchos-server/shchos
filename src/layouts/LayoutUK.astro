@@ -1,9 +1,9 @@
 ---
-import LocaleSwitcher from "../components/LocaleSwitcher.astro";
-import DiscordAccount from "../components/DiscordAccount.astro";
-
 import "../css/reset.css";
 import "normalize.css/normalize.css";
+import { NavBar } from "../components/NavBar";
+import DiscordAccount from "../components/DiscordAccount.astro";
+import LocaleSwitcher from "../components/LocaleSwitcher.astro";
 
 const title = Astro.props.title ?? "щось";
 ---
@@ -44,22 +44,10 @@ const title = Astro.props.title ?? "щось";
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
   <body>
-    <header>
-      <a href="/uk">
-        <h2>щось</h2>
-      </a>
-      <nav>
-        <ul>
-          <li><a href="/uk/rules">Правила</a></li>
-          <li><a href="/uk/report">Рапорт</a></li>
-          <!-- <li><a href="/uk/sosem">Sosem</a></li> -->
-        </ul>
-      </nav>
-      <div class="header-actions">
-        <DiscordAccount locale="uk" />
-        <LocaleSwitcher />
-      </div>
-    </header>
+    <NavBar>
+      <DiscordAccount locale="uk" />
+      <LocaleSwitcher />
+    </NavBar>
     <main>
       <slot />
     </main>

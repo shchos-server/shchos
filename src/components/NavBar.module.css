@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  padding: 10px 50px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #393a3f;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+@media screen and (max-width: 600px) {
+  .header {
+    padding: 10px 16px;
+  }
+}
+
+.header > nav {
+  display: block;
+}
+
+@media screen and (min-width: 420px) {
+  .header > nav {
+    display: block;
+  }
+}
+.header > nav > ul {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  list-style: none;
+}
