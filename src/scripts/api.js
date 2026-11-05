@@ -38,14 +38,8 @@ export const makeReport = (payload) => {
 };
 
 export const getAdminReports = (before) => {
-  const query = before ? `?before=${encodeURIComponent(before)}` : "";
-  return axios
-    .get(`/api/admin/reports${query}`, {
-      params: before ? { before } : {},
-      validateStatus: () => true,
-    })
-    .then((res) => res)
-    .catch((err) => {
-      throw err;
-    });
+  return axios.get("/api/admin/reports", {
+    params: before ? { before } : {},
+    validateStatus: () => true
+  });
 };

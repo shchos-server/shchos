@@ -61,7 +61,6 @@ export const AdminReports = ({ locale = "uk" }) => {
   };
 
   useEffect(() => {
-    setLoading(true);
     loadReports(true);
   }, []);
 
