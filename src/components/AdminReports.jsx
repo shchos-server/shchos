@@ -3,6 +3,7 @@ import { getAdminReports } from "../scripts/api";
 import { reportMessages } from "../scripts/report-messages";
 import { Report } from "./Report";
 import { flushSync } from "react-dom";
+import s from './AdminReports.module.css'
 
 export const AdminReports = ({ locale = "uk" }) => {
   const [reports, setReports] = useState([]);
@@ -94,11 +95,11 @@ export const AdminReports = ({ locale = "uk" }) => {
   }, [loadReports]);
 
   return (
-    <section>
-      <div>
+    <section className={s.reportsPage}>
+      <div className={s.pageHeading}>
         <div>
           <h1>{locale === "en" ? "Reports" : "Рапорти"}</h1>
-          <p>
+          <p className={s.intro}>
             {locale === "en"
               ? "Reports from server members, newest first."
               : "Звернення учасників сервера — спочатку найновіші."}
@@ -106,14 +107,14 @@ export const AdminReports = ({ locale = "uk" }) => {
         </div>
         <button
           type="button"
-          className="action secondary"
+          className={`${s.action} ${s.secondary}`}
           onClick={(e) => loadReports(true)}
           disabled={loading}
         >
           {locale === "en" ? "Refresh" : "Оновити"}
         </button>
       </div>
-      <div role="status" aria-live="polite" data-state={error ? "error" : ""}>
+      <div className={s.notice} role="status" aria-live="polite" data-state={error ? "error" : ""}>
         {error
           ? error
           : loading
@@ -129,6 +130,7 @@ export const AdminReports = ({ locale = "uk" }) => {
                 : "Рапортів поки немає."}
       </div>
       <a
+        className={s.action}
         hidden={hideLogin}
         href={`/api/auth/discord?locale=${locale}&returnTo=/${locale}/admin`}
       >
@@ -153,13 +155,14 @@ export const AdminReports = ({ locale = "uk" }) => {
             : "Увімкніть JavaScript, щоб переглянути рапорти."}
         </p>
       </noscript>
-      <div aria-busy={loading}>
+      <div className={s.reportList} aria-busy={loading}>
         {reports.map((i) => (
           <Report key={i.id} data={i} locale={locale} />
         ))}
       </div>
       <button
         type="button"
+        className={`${s.action} ${s.secondary}`}
         hidden={!cursor}
         disabled={loading}
         onClick={(e) => loadReports(false)}

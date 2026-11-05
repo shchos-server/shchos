@@ -1,3 +1,5 @@
+import s from './AdminReports.module.css'
+
 export const Report = ({data, locale}) => {
   const {
     id,
@@ -16,10 +18,10 @@ export const Report = ({data, locale}) => {
 
   return (
     <li>
-      <details>
+      <details className={s.reportCard}>
         <summary>
           <h2>{subject}</h2>
-          <div>
+          <div className={s.reportMeta}>
             <span>
               {id} · {type}
             </span>
@@ -28,11 +30,11 @@ export const Report = ({data, locale}) => {
             </time>
           </div>
         </summary>
-        <div>
-          <p>
+        <div className={s.reportDetail}>
+          <p className={s.reportAuthor}>
             {locale === "en" ? "Author" : "Автор"}: {author_name} · Discord ID: {author_id}`
           </p>
-          <p>{description}</p>
+          <p className={s.reportBody}>{description}</p>
         </div>
       </details>
     </li>
