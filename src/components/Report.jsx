@@ -1,4 +1,4 @@
-export const Report = ({data}) => {
+export const Report = ({data, locale}) => {
   const {
     id,
     subject,
@@ -11,7 +11,7 @@ export const Report = ({data}) => {
   const type = {
     discord: "Discord",
     minecraft: "Minecraft",
-    other: en ? "Other" : "Інше",
+    other: locale === "en" ? "Other" : "Інше",
   }[category];
 
   return (
@@ -24,13 +24,13 @@ export const Report = ({data}) => {
               {id} · {type}
             </span>
             <time datetime={created_at}>
-              {new Date(created_at).toLocaleString(en ? "en-GB" : "uk-UA")}
+              {new Date(created_at).toLocaleString(locale === "en" ? "en-GB" : "uk-UA")}
             </time>
           </div>
         </summary>
         <div>
           <p>
-            {en ? "Author" : "Автор"}: {author_name} · Discord ID: {author_id}`
+            {locale === "en" ? "Author" : "Автор"}: {author_name} · Discord ID: {author_id}`
           </p>
           <p>{description}</p>
         </div>
