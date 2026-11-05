@@ -5,6 +5,7 @@ import JoinServer from "../components/JoinServer.astro";
 
 import "../css/reset.css";
 import "normalize.css/normalize.css";
+import { NavBar } from "../components/NavBar";
 
 const title = Astro.props.title ?? "щось";
 ---
@@ -47,22 +48,10 @@ const title = Astro.props.title ?? "щось";
     <title>{title}</title>
   </head>
   <body>
-    <header>
-      <a href="/en">
-        <h2>щось</h2>
-      </a>
-      <nav>
-        <ul>
-          <li><a href="/en/rules">Rules</a></li>
-          <li><a href="/en/report">Report</a></li>
-          <!-- <li><a href="/en/sosem">Sosem</a></li> -->
-        </ul>
-      </nav>
-      <div class="header-actions">
-        <DiscordAccount locale="en" />
-        <LocaleSwitcher />
-      </div>
-    </header>
+    <NavBar>
+      <DiscordAccount locale="en" />
+      <LocaleSwitcher />
+    </NavBar>
     <main>
       <slot />
     </main>

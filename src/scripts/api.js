@@ -28,7 +28,6 @@ export const makeReport = (payload) => {
   const attempt = { fingerprint, id: crypto.randomUUID() };
   return axios
     .post("/api/reports", {
-      credentials: "same-origin",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...payload, requestId: attempt.id }),
     })
@@ -38,13 +37,15 @@ export const makeReport = (payload) => {
     });
 };
 
-export const getAdminReports = () => {
-  return axios.get(`/api/admin/reports${query}`, {
-    credentials: "same-origin",
-    cache: "no-store",
-  })
-  .then(res => res.data)
-  .catch(err => {
-    throw err
-  });
+export const getAdminReports = (before) => {
+  const query = before ? `?before=${encodeURIComponent(before)}` : "";
+  return axios
+    .get(`/api/admin/reports${query}`, {
+      params: before ? { before } : {},
+      validateStatus: () => true,
+    })
+    .then((res) => res)
+    .catch((err) => {
+      throw err;
+    });
 };

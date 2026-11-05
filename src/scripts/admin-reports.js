@@ -56,6 +56,7 @@ function initializeAdmin(root) {
       const query = cursor ? `?before=${encodeURIComponent(cursor)}` : "";
       const res = await fetch(`/api/admin/reports${query}`, { credentials: "same-origin", cache: "no-store" });
       const data = await res.json();
+      console.log(data)
       if (!res.ok) {
         message.dataset.state = "error";
         message.textContent = messages[data.error] || messages.unavailable;
