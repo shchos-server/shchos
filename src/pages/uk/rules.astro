@@ -25,12 +25,14 @@ const pageTitle = rules.data.title;
     margin: 0 auto;
   }
 
-  img {
+  img,
+  .content video {
     display: block;
     margin: 0 auto;
   }
 
-  img[src*="/logo.gif"] {
+  img[src*="/logo.gif"],
+  .content video[src="/logo.webm"] {
     height: auto;
     max-width: 420px;
     width: 100%;
